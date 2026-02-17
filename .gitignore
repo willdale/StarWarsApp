@@ -1,0 +1,27 @@
+# Rust
+libstarwars/target/
+libstarwars/build/
+libstarwars/Cargo.lock
+**/*.rs.bk
+
+# Swift / Xcode
+*.xcodeproj/xcuserdata/
+*.xcworkspace/xcuserdata/
+*.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
+DerivedData/
+.build/
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# RustRover
+libstarwars/.idea/
+StarWarsLibrary/StarWars.xcframework
+
+# Swift Package Manager
+.swiftpm/
+Package.resolved  # optional — like Cargo.lock, some teams commit this
+
+# macOS noise
+.DS_Store
+*.swp
