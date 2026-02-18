@@ -5,9 +5,17 @@ libstarwars/Cargo.lock
 **/*.rs.bk
 
 # Swift / Xcode
-*.xcodeproj/xcuserdata/
-*.xcworkspace/xcuserdata/
-*.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
+# Xcode
+iOS/StarWarsApp.xcodeproj/project.xcworkspace/
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata/
+!*.xcodeproj/project.xcworkspace/
+!*.xcodeproj/project.xcworkspace/contents.xcworkspacedata
+*.xcworkspace/*
+!*.xcworkspace/contents.xcworkspacedata
+*.xcuserstate
+xcuserdata/
 DerivedData/
 .build/
 *.ipa
@@ -16,11 +24,11 @@ DerivedData/
 
 # RustRover
 libstarwars/.idea/
-StarWarsLibrary/StarWars.xcframework
+iOS/StarWarsLibrary/StarWars.xcframework
 
 # Swift Package Manager
 .swiftpm/
-Package.resolved  # optional — like Cargo.lock, some teams commit this
+Package.resolved
 
 # macOS noise
 .DS_Store

@@ -14,7 +14,7 @@ BINDINGS_DIR="${BUILD_DIR}/bindings"
 XCFRAMEWORK_NAME="${MODULE_NAME}.xcframework"
 
 # SPM Configuration
-SPM_PACKAGE_DIR="../StarwarsLibrary"
+SPM_PACKAGE_DIR="../iOS/StarwarsLibrary"
 SPM_SOURCES_DIR="${SPM_PACKAGE_DIR}/Sources/StarwarsLibrary"
 SPM_XCFRAMEWORK_DIR="${SPM_PACKAGE_DIR}"
 
