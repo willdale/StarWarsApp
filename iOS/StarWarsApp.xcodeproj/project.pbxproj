@@ -21,7 +21,7 @@
 		6C51CE942F450FE100DC52DC /* InitialSubviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C51CE932F450FE100DC52DC /* InitialSubviews.swift */; };
 		6C51CE962F4511FB00DC52DC /* Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C51CE952F4511F700DC52DC /* Navigation.swift */; };
 		6C51CE982F451CF700DC52DC /* HomeworldDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C51CE972F451CF700DC52DC /* HomeworldDetailView.swift */; };
-		6CD01E082F42332100858EE8 /* StarWarsLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = 6CD01E072F42332100858EE8 /* StarWarsLibrary */; };
+		6CC806BF2F49B0E900505223 /* StarWarsLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = 6CC806BE2F49B0E900505223 /* StarWarsLibrary */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -61,7 +61,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6CD01E082F42332100858EE8 /* StarWarsLibrary in Frameworks */,
+				6CC806BF2F49B0E900505223 /* StarWarsLibrary in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -156,7 +156,7 @@
 			);
 			name = StarWarsApp;
 			packageProductDependencies = (
-				6CD01E072F42332100858EE8 /* StarWarsLibrary */,
+				6CC806BE2F49B0E900505223 /* StarWarsLibrary */,
 			);
 			productName = starwars;
 			productReference = 6C68C9FA2F41BDC800190A85 /* StarWarsApp.app */;
@@ -187,7 +187,7 @@
 			mainGroup = 6C68C9F12F41BDC800190A85;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				6CD01E062F42332100858EE8 /* XCLocalSwiftPackageReference "StarWarsLibrary" */,
+				6CC806BD2F49B0E900505223 /* XCLocalSwiftPackageReference "../../starwars/StarWarsLibrary" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 6C68C9FB2F41BDC800190A85 /* Products */;
@@ -443,14 +443,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		6CD01E062F42332100858EE8 /* XCLocalSwiftPackageReference "StarWarsLibrary" */ = {
+		6CC806BD2F49B0E900505223 /* XCLocalSwiftPackageReference "../../starwars/StarWarsLibrary" */ = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = StarWarsLibrary;
+			relativePath = ../../starwars/StarWarsLibrary;
 		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		6CD01E072F42332100858EE8 /* StarWarsLibrary */ = {
+		6CC806BE2F49B0E900505223 /* StarWarsLibrary */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = StarWarsLibrary;
 		};

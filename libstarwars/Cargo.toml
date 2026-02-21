@@ -19,5 +19,5 @@ async-trait = "0.1.89"
 uniffi = { version = "0.31.0", features = [ "build", "cli" ] }
 
 [[bin]]
-name = "uniffi-bindgen-swift"
-path = "uniffi-bindgen-swift.rs"
+name = "uniffi-bindgen-main"
+path = "uniffi-bindgen-main.rs"

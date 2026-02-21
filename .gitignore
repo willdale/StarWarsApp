@@ -24,7 +24,7 @@ DerivedData/
 
 # RustRover
 libstarwars/.idea/
-iOS/StarWarsLibrary/StarWars.xcframework
+iOS/StarWarsLibrary/Frameworks
 
 # Swift Package Manager
 .swiftpm/
