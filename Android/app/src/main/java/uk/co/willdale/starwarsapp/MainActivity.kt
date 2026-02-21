@@ -32,6 +32,5 @@ class MainActivity : ComponentActivity() {
             )
         )
         viewModel = ViewModelProvider(this, factory)[MainViewModel::class.java]
-        viewModel.loadPlanets()
     }
 }
