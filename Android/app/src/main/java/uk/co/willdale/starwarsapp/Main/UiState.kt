@@ -1,4 +1,4 @@
-package uk.co.willdale.starwarsapp
+package uk.co.willdale.starwarsapp.Main
 
 sealed class UiState<out T> {
     object Idle : UiState<Nothing>()

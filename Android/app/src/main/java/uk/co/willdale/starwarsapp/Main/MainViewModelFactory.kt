@@ -1,4 +1,4 @@
-package uk.co.willdale.starwarsapp
+package uk.co.willdale.starwarsapp.Main
 
 // MainViewModelFactory.kt
 import androidx.lifecycle.ViewModel

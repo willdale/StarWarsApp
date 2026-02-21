@@ -1,11 +1,11 @@
-package uk.co.willdale.starwarsapp
+package uk.co.willdale.starwarsapp.Main
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.lifecycle.ViewModelProvider
-import uk.co.willdale.starwarsapp.networking.HttpClientAndroid
+import uk.co.willdale.starwarsapp.Networking.HttpClientAndroid
 import uniffi.starwars.ApiClient
 import uniffi.starwars.DataRepository
 

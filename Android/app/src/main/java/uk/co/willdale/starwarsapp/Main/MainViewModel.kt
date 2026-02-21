@@ -1,4 +1,4 @@
-package uk.co.willdale.starwarsapp
+package uk.co.willdale.starwarsapp.Main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -23,14 +23,7 @@ class MainViewModel(private val apiClient: ApiClient) : ViewModel() {
                 val data: List<Any> = if (urls != null) {
                     urls.map { url ->
                         async {
-                            when (fetchable) {
-                                Fetchable.PLANETS -> apiClient.fetchPlanet(url)
-                                Fetchable.PEOPLE -> apiClient.fetchPerson(url)
-                                Fetchable.FILMS -> apiClient.fetchFilm(url)
-                                Fetchable.SPECIES -> apiClient.fetchSpecies(url)
-                                Fetchable.STARSHIPS -> apiClient.fetchStarship(url)
-                                Fetchable.VEHICLES -> apiClient.fetchVehicle(url)
-                            }
+                            fetchSingleItem(fetchable, url)
                         }
                     }.awaitAll()
                 } else {
@@ -50,6 +43,29 @@ class MainViewModel(private val apiClient: ApiClient) : ViewModel() {
             } catch (e: Exception) {
                 _uiState.value = UiState.Error(e.message ?: "An unexpected error occurred")
             }
+        }
+    }
+
+    fun loadItem(fetchable: Fetchable, url: String) {
+        viewModelScope.launch {
+            _uiState.value = UiState.Loading
+            try {
+                val item = fetchSingleItem(fetchable, url)
+                _uiState.value = UiState.Success(listOf(item))
+            } catch (e: Exception) {
+                _uiState.value = UiState.Error(e.message ?: "An unexpected error occurred")
+            }
+        }
+    }
+
+    private suspend fun fetchSingleItem(fetchable: Fetchable, url: String): Any {
+        return when (fetchable) {
+            Fetchable.PLANETS -> apiClient.fetchPlanet(url)
+            Fetchable.PEOPLE -> apiClient.fetchPerson(url)
+            Fetchable.FILMS -> apiClient.fetchFilm(url)
+            Fetchable.SPECIES -> apiClient.fetchSpecies(url)
+            Fetchable.STARSHIPS -> apiClient.fetchStarship(url)
+            Fetchable.VEHICLES -> apiClient.fetchVehicle(url)
         }
     }
 }

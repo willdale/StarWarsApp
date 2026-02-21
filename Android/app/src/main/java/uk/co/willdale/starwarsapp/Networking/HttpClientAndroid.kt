@@ -1,4 +1,4 @@
-package uk.co.willdale.starwarsapp.networking
+package uk.co.willdale.starwarsapp.Networking
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
