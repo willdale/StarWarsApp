@@ -15,11 +15,10 @@ use crate::models::vehicles::{Vehicle, Vehicles};
 #[uniffi::export]
 impl ApiClient {
     pub async fn fetch_films(&self, ignore_cache: bool) -> Result<Vec<Film>, ApiError> {
-        if !ignore_cache {
-             if let Some(cached_films) = self.repository.get_films() {
+        if !ignore_cache
+             && let Some(cached_films) = self.repository.get_films() {
                 return Ok(cached_films);
             }
-        }
         let films = self.fetch_page::<Films>(Fetchable::Films).await?.results;
         for film in &films {
             self.repository.insert_film(film);
@@ -44,11 +43,10 @@ impl ApiClient {
 #[uniffi::export]
 impl ApiClient {
     pub async fn fetch_people(&self, ignore_cache: bool) -> Result<Vec<Person>, ApiError> {
-        if !ignore_cache {
-            if let Some(cached_people) = self.repository.get_people() {
+        if !ignore_cache
+            && let Some(cached_people) = self.repository.get_people() {
                 return Ok(cached_people);
             }
-        }
         let people = self.fetch_page::<People>(Fetchable::People).await?.results;
         for person in &people {
             self.repository.insert_person(person);
@@ -73,11 +71,10 @@ impl ApiClient {
 #[uniffi::export]
 impl ApiClient {
     pub async fn fetch_planets(&self, ignore_cache: bool) -> Result<Vec<Planet>, ApiError> {
-        if !ignore_cache {
-            if let Some(cached_planets) = self.repository.get_planets() {
+        if !ignore_cache
+            && let Some(cached_planets) = self.repository.get_planets() {
                 return Ok(cached_planets);
             }
-        }
         let planets = self.fetch_page::<Planets>(Fetchable::Planets).await?.results;
         for planet in &planets {
             self.repository.insert_planet(planet);
@@ -102,11 +99,10 @@ impl ApiClient {
 #[uniffi::export]
 impl ApiClient {
     pub async fn fetch_species_list(&self, ignore_cache: bool) -> Result<Vec<Species>, ApiError> {
-        if !ignore_cache {
-            if let Some(cached_species) = self.repository.get_species_list() {
+        if !ignore_cache
+            && let Some(cached_species) = self.repository.get_species_list() {
                 return Ok(cached_species);
             }
-        }
         let species_list = self.fetch_page::<SpeciesList>(Fetchable::Species).await?.results;
         for species in &species_list {
             self.repository.insert_species(species);
@@ -131,11 +127,10 @@ impl ApiClient {
 #[uniffi::export]
 impl ApiClient {
     pub async fn fetch_starships(&self, ignore_cache: bool) -> Result<Vec<Starship>, ApiError> {
-        if !ignore_cache {
-            if let Some(cached_starships) = self.repository.get_starships() {
+        if !ignore_cache
+            && let Some(cached_starships) = self.repository.get_starships() {
                 return Ok(cached_starships);
             }
-        }
         let starships = self.fetch_page::<Starships>(Fetchable::Starships).await?.results;
         for starship in &starships {
             self.repository.insert_starship(starship);
@@ -160,11 +155,10 @@ impl ApiClient {
 #[uniffi::export]
 impl ApiClient {
     pub async fn fetch_vehicles(&self, ignore_cache: bool) -> Result<Vec<Vehicle>, ApiError> {
-        if !ignore_cache {
-            if let Some(cached_vehicles) = self.repository.get_vehicles() {
+        if !ignore_cache
+            && let Some(cached_vehicles) = self.repository.get_vehicles() {
                 return Ok(cached_vehicles);
             }
-        }
         let vehicles = self.fetch_page::<Vehicles>(Fetchable::Vehicles).await?.results;
         for vehicle in &vehicles {
             self.repository.insert_vehicle(vehicle);
