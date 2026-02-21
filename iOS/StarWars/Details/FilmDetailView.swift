@@ -60,23 +60,23 @@ struct FilmDetailView: View {
                 
                 // List Sections
                 if !film.characters.isEmpty {
-                    SelectableRow(title: "Characters", icon: "person.2", items: .people(film.characters.compactMap(URL.init)))
+                    SelectableRow(title: "Characters", icon: "person.2", items: .people(film.characters))
                 }
                 
                 if !film.planets.isEmpty {
-                    SelectableRow(title: "Planets", icon: "globe", items: .planets(film.planets.compactMap(URL.init)))
+                    SelectableRow(title: "Planets", icon: "globe", items: .planets(film.planets))
                 }
                 
                 if !film.starships.isEmpty {
-                    SelectableRow(title: "Starships", icon: "airplane", items: .starships(film.starships.compactMap(URL.init)))
+                    SelectableRow(title: "Starships", icon: "airplane", items: .starships(film.starships))
                 }
                 
                 if !film.vehicles.isEmpty {
-                    SelectableRow(title: "Vehicles", icon: "car", items: .vehicles(film.vehicles.compactMap(URL.init)))
+                    SelectableRow(title: "Vehicles", icon: "car", items: .vehicles(film.vehicles))
                 }
                 
                 if !film.species.isEmpty {
-                    SelectableRow(title: "Species", icon: "pawprint", items: .species(film.species.compactMap(URL.init)))
+                    SelectableRow(title: "Species", icon: "pawprint", items: .species(film.species))
                 }
             }
             .padding(.vertical)

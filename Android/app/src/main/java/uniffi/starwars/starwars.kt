@@ -667,6 +667,8 @@ internal object IntegrityCheckingUniffiLib {
     }
     external fun uniffi_starwars_checksum_func_all_fetchable(
     ): Short
+    external fun uniffi_starwars_checksum_func_person_related_items(
+    ): Short
     external fun uniffi_starwars_checksum_method_apiclient_fetch_film(
     ): Short
     external fun uniffi_starwars_checksum_method_apiclient_fetch_films(
@@ -775,6 +777,8 @@ internal object UniffiLib {
     external fun uniffi_starwars_fn_method_fetchable_display_name(`ptr`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
     external fun uniffi_starwars_fn_func_all_fetchable(uniffi_out_err: UniffiRustCallStatus, 
+    ): RustBuffer.ByValue
+    external fun uniffi_starwars_fn_func_person_related_items(`person`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
     external fun ffi_starwars_rustbuffer_alloc(`size`: Long,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
@@ -896,6 +900,9 @@ private fun uniffiCheckContractApiVersion(lib: IntegrityCheckingUniffiLib) {
 @Suppress("UNUSED_PARAMETER")
 private fun uniffiCheckApiChecksums(lib: IntegrityCheckingUniffiLib) {
     if (lib.uniffi_starwars_checksum_func_all_fetchable() != 46703.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_starwars_checksum_func_person_related_items() != 10831.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if (lib.uniffi_starwars_checksum_method_apiclient_fetch_film() != 29515.toShort()) {
@@ -2536,33 +2543,33 @@ public object FfiConverterTypeHttpClient: FfiConverter<HttpClient, Long> {
 
 
 data class Film (
-    var `title`: kotlin.String
+    val `title`: kotlin.String
     , 
-    var `episodeId`: kotlin.Int
+    val `episodeId`: kotlin.Int
     , 
-    var `openingCrawl`: kotlin.String
+    val `openingCrawl`: kotlin.String
     , 
-    var `director`: kotlin.String
+    val `director`: kotlin.String
     , 
-    var `producer`: kotlin.String
+    val `producer`: kotlin.String
     , 
-    var `releaseDate`: kotlin.String
+    val `releaseDate`: kotlin.String
     , 
-    var `characters`: List<kotlin.String>
+    val `characters`: List<kotlin.String>
     , 
-    var `planets`: List<kotlin.String>
+    val `planets`: List<kotlin.String>
     , 
-    var `starships`: List<kotlin.String>
+    val `starships`: List<kotlin.String>
     , 
-    var `vehicles`: List<kotlin.String>
+    val `vehicles`: List<kotlin.String>
     , 
-    var `species`: List<kotlin.String>
+    val `species`: List<kotlin.String>
     , 
-    var `created`: kotlin.String
+    val `created`: kotlin.String
     , 
-    var `edited`: kotlin.String
+    val `edited`: kotlin.String
     , 
-    var `url`: kotlin.String
+    val `url`: kotlin.String
     
 ){
     
@@ -2634,37 +2641,37 @@ public object FfiConverterTypeFilm: FfiConverterRustBuffer<Film> {
 
 
 data class Person (
-    var `birthYear`: kotlin.String
+    val `birthYear`: kotlin.String
     , 
-    var `eyeColor`: kotlin.String
+    val `eyeColor`: kotlin.String
     , 
-    var `films`: List<kotlin.String>
+    val `films`: List<kotlin.String>
     , 
-    var `gender`: kotlin.String
+    val `gender`: kotlin.String
     , 
-    var `hairColor`: kotlin.String
+    val `hairColor`: kotlin.String
     , 
-    var `height`: kotlin.String
+    val `height`: kotlin.String
     , 
-    var `homeworld`: kotlin.String?
+    val `homeworld`: kotlin.String?
     , 
-    var `mass`: kotlin.String
+    val `mass`: kotlin.String
     , 
-    var `name`: kotlin.String
+    val `name`: kotlin.String
     , 
-    var `skinColor`: kotlin.String
+    val `skinColor`: kotlin.String
     , 
-    var `created`: kotlin.String
+    val `created`: kotlin.String
     , 
-    var `edited`: kotlin.String
+    val `edited`: kotlin.String
     , 
-    var `species`: List<kotlin.String>
+    val `species`: List<kotlin.String>
     , 
-    var `starships`: List<kotlin.String>
+    val `starships`: List<kotlin.String>
     , 
-    var `url`: kotlin.String
+    val `url`: kotlin.String
     , 
-    var `vehicles`: List<kotlin.String>
+    val `vehicles`: List<kotlin.String>
     
 ){
     
@@ -2742,33 +2749,33 @@ public object FfiConverterTypePerson: FfiConverterRustBuffer<Person> {
 
 
 data class Planet (
-    var `name`: kotlin.String
+    val `name`: kotlin.String
     , 
-    var `rotationPeriod`: kotlin.String
+    val `rotationPeriod`: kotlin.String
     , 
-    var `orbitalPeriod`: kotlin.String
+    val `orbitalPeriod`: kotlin.String
     , 
-    var `diameter`: kotlin.String
+    val `diameter`: kotlin.String
     , 
-    var `climate`: kotlin.String
+    val `climate`: kotlin.String
     , 
-    var `gravity`: kotlin.String
+    val `gravity`: kotlin.String
     , 
-    var `terrain`: kotlin.String
+    val `terrain`: kotlin.String
     , 
-    var `surfaceWater`: kotlin.String
+    val `surfaceWater`: kotlin.String
     , 
-    var `population`: kotlin.String
+    val `population`: kotlin.String
     , 
-    var `residents`: List<kotlin.String>
+    val `residents`: List<kotlin.String>
     , 
-    var `films`: List<kotlin.String>
+    val `films`: List<kotlin.String>
     , 
-    var `created`: kotlin.String
+    val `created`: kotlin.String
     , 
-    var `edited`: kotlin.String
+    val `edited`: kotlin.String
     , 
-    var `url`: kotlin.String
+    val `url`: kotlin.String
     
 ){
     
@@ -2840,35 +2847,35 @@ public object FfiConverterTypePlanet: FfiConverterRustBuffer<Planet> {
 
 
 data class Species (
-    var `name`: kotlin.String
+    val `name`: kotlin.String
     , 
-    var `classification`: kotlin.String
+    val `classification`: kotlin.String
     , 
-    var `designation`: kotlin.String
+    val `designation`: kotlin.String
     , 
-    var `averageHeight`: kotlin.String
+    val `averageHeight`: kotlin.String
     , 
-    var `skinColors`: kotlin.String
+    val `skinColors`: kotlin.String
     , 
-    var `hairColors`: kotlin.String
+    val `hairColors`: kotlin.String
     , 
-    var `eyeColors`: kotlin.String
+    val `eyeColors`: kotlin.String
     , 
-    var `averageLifespan`: kotlin.String
+    val `averageLifespan`: kotlin.String
     , 
-    var `homeworld`: kotlin.String?
+    val `homeworld`: kotlin.String?
     , 
-    var `language`: kotlin.String
+    val `language`: kotlin.String
     , 
-    var `people`: List<kotlin.String>
+    val `people`: List<kotlin.String>
     , 
-    var `films`: List<kotlin.String>
+    val `films`: List<kotlin.String>
     , 
-    var `created`: kotlin.String
+    val `created`: kotlin.String
     , 
-    var `edited`: kotlin.String
+    val `edited`: kotlin.String
     , 
-    var `url`: kotlin.String
+    val `url`: kotlin.String
     
 ){
     
@@ -2943,41 +2950,41 @@ public object FfiConverterTypeSpecies: FfiConverterRustBuffer<Species> {
 
 
 data class Starship (
-    var `name`: kotlin.String
+    val `name`: kotlin.String
     , 
-    var `model`: kotlin.String
+    val `model`: kotlin.String
     , 
-    var `manufacturer`: kotlin.String
+    val `manufacturer`: kotlin.String
     , 
-    var `costInCredits`: kotlin.String
+    val `costInCredits`: kotlin.String
     , 
-    var `length`: kotlin.String
+    val `length`: kotlin.String
     , 
-    var `maxAtmospheringSpeed`: kotlin.String
+    val `maxAtmospheringSpeed`: kotlin.String
     , 
-    var `crew`: kotlin.String
+    val `crew`: kotlin.String
     , 
-    var `passengers`: kotlin.String
+    val `passengers`: kotlin.String
     , 
-    var `cargoCapacity`: kotlin.String
+    val `cargoCapacity`: kotlin.String
     , 
-    var `consumables`: kotlin.String
+    val `consumables`: kotlin.String
     , 
-    var `hyperdriveRating`: kotlin.String
+    val `hyperdriveRating`: kotlin.String
     , 
-    var `mglt`: kotlin.String
+    val `mglt`: kotlin.String
     , 
-    var `starshipClass`: kotlin.String
+    val `starshipClass`: kotlin.String
     , 
-    var `pilots`: List<kotlin.String>
+    val `pilots`: List<kotlin.String>
     , 
-    var `films`: List<kotlin.String>
+    val `films`: List<kotlin.String>
     , 
-    var `created`: kotlin.String
+    val `created`: kotlin.String
     , 
-    var `edited`: kotlin.String
+    val `edited`: kotlin.String
     , 
-    var `url`: kotlin.String
+    val `url`: kotlin.String
     
 ){
     
@@ -3061,37 +3068,37 @@ public object FfiConverterTypeStarship: FfiConverterRustBuffer<Starship> {
 
 
 data class Vehicle (
-    var `name`: kotlin.String
+    val `name`: kotlin.String
     , 
-    var `model`: kotlin.String
+    val `model`: kotlin.String
     , 
-    var `manufacturer`: kotlin.String
+    val `manufacturer`: kotlin.String
     , 
-    var `costInCredits`: kotlin.String
+    val `costInCredits`: kotlin.String
     , 
-    var `length`: kotlin.String
+    val `length`: kotlin.String
     , 
-    var `maxAtmospheringSpeed`: kotlin.String
+    val `maxAtmospheringSpeed`: kotlin.String
     , 
-    var `crew`: kotlin.String
+    val `crew`: kotlin.String
     , 
-    var `passengers`: kotlin.String
+    val `passengers`: kotlin.String
     , 
-    var `cargoCapacity`: kotlin.String
+    val `cargoCapacity`: kotlin.String
     , 
-    var `consumables`: kotlin.String
+    val `consumables`: kotlin.String
     , 
-    var `vehicleClass`: kotlin.String
+    val `vehicleClass`: kotlin.String
     , 
-    var `pilots`: List<kotlin.String>
+    val `pilots`: List<kotlin.String>
     , 
-    var `films`: List<kotlin.String>
+    val `films`: List<kotlin.String>
     , 
-    var `created`: kotlin.String
+    val `created`: kotlin.String
     , 
-    var `edited`: kotlin.String
+    val `edited`: kotlin.String
     , 
-    var `url`: kotlin.String
+    val `url`: kotlin.String
     
 ){
     
@@ -3307,6 +3314,209 @@ public object FfiConverterTypeFetchable: FfiConverterRustBuffer<Fetchable> {
 
     override fun write(value: Fetchable, buf: ByteBuffer) {
         buf.putInt(value.ordinal + 1)
+    }
+}
+
+
+
+
+
+sealed class ListItems {
+    
+    data class Planets(
+        val v1: List<kotlin.String>) : ListItems()
+        
+    {
+        
+
+        companion object
+    }
+    
+    data class People(
+        val v1: List<kotlin.String>) : ListItems()
+        
+    {
+        
+
+        companion object
+    }
+    
+    data class Films(
+        val v1: List<kotlin.String>) : ListItems()
+        
+    {
+        
+
+        companion object
+    }
+    
+    data class Species(
+        val v1: List<kotlin.String>) : ListItems()
+        
+    {
+        
+
+        companion object
+    }
+    
+    data class Starships(
+        val v1: List<kotlin.String>) : ListItems()
+        
+    {
+        
+
+        companion object
+    }
+    
+    data class Vehicles(
+        val v1: List<kotlin.String>) : ListItems()
+        
+    {
+        
+
+        companion object
+    }
+    
+    data class Homeworld(
+        val v1: kotlin.String) : ListItems()
+        
+    {
+        
+
+        companion object
+    }
+    
+
+    
+
+    
+    
+
+
+    companion object
+}
+
+/**
+ * @suppress
+ */
+public object FfiConverterTypeListItems : FfiConverterRustBuffer<ListItems>{
+    override fun read(buf: ByteBuffer): ListItems {
+        return when(buf.getInt()) {
+            1 -> ListItems.Planets(
+                FfiConverterSequenceString.read(buf),
+                )
+            2 -> ListItems.People(
+                FfiConverterSequenceString.read(buf),
+                )
+            3 -> ListItems.Films(
+                FfiConverterSequenceString.read(buf),
+                )
+            4 -> ListItems.Species(
+                FfiConverterSequenceString.read(buf),
+                )
+            5 -> ListItems.Starships(
+                FfiConverterSequenceString.read(buf),
+                )
+            6 -> ListItems.Vehicles(
+                FfiConverterSequenceString.read(buf),
+                )
+            7 -> ListItems.Homeworld(
+                FfiConverterString.read(buf),
+                )
+            else -> throw RuntimeException("invalid enum value, something is very wrong!!")
+        }
+    }
+
+    override fun allocationSize(value: ListItems) = when(value) {
+        is ListItems.Planets -> {
+            // Add the size for the Int that specifies the variant plus the size needed for all fields
+            (
+                4UL
+                + FfiConverterSequenceString.allocationSize(value.v1)
+            )
+        }
+        is ListItems.People -> {
+            // Add the size for the Int that specifies the variant plus the size needed for all fields
+            (
+                4UL
+                + FfiConverterSequenceString.allocationSize(value.v1)
+            )
+        }
+        is ListItems.Films -> {
+            // Add the size for the Int that specifies the variant plus the size needed for all fields
+            (
+                4UL
+                + FfiConverterSequenceString.allocationSize(value.v1)
+            )
+        }
+        is ListItems.Species -> {
+            // Add the size for the Int that specifies the variant plus the size needed for all fields
+            (
+                4UL
+                + FfiConverterSequenceString.allocationSize(value.v1)
+            )
+        }
+        is ListItems.Starships -> {
+            // Add the size for the Int that specifies the variant plus the size needed for all fields
+            (
+                4UL
+                + FfiConverterSequenceString.allocationSize(value.v1)
+            )
+        }
+        is ListItems.Vehicles -> {
+            // Add the size for the Int that specifies the variant plus the size needed for all fields
+            (
+                4UL
+                + FfiConverterSequenceString.allocationSize(value.v1)
+            )
+        }
+        is ListItems.Homeworld -> {
+            // Add the size for the Int that specifies the variant plus the size needed for all fields
+            (
+                4UL
+                + FfiConverterString.allocationSize(value.v1)
+            )
+        }
+    }
+
+    override fun write(value: ListItems, buf: ByteBuffer) {
+        when(value) {
+            is ListItems.Planets -> {
+                buf.putInt(1)
+                FfiConverterSequenceString.write(value.v1, buf)
+                Unit
+            }
+            is ListItems.People -> {
+                buf.putInt(2)
+                FfiConverterSequenceString.write(value.v1, buf)
+                Unit
+            }
+            is ListItems.Films -> {
+                buf.putInt(3)
+                FfiConverterSequenceString.write(value.v1, buf)
+                Unit
+            }
+            is ListItems.Species -> {
+                buf.putInt(4)
+                FfiConverterSequenceString.write(value.v1, buf)
+                Unit
+            }
+            is ListItems.Starships -> {
+                buf.putInt(5)
+                FfiConverterSequenceString.write(value.v1, buf)
+                Unit
+            }
+            is ListItems.Vehicles -> {
+                buf.putInt(6)
+                FfiConverterSequenceString.write(value.v1, buf)
+                Unit
+            }
+            is ListItems.Homeworld -> {
+                buf.putInt(7)
+                FfiConverterString.write(value.v1, buf)
+                Unit
+            }
+        }.let { /* this makes the `when` an expression, which ensures it is exhaustive */ }
     }
 }
 
@@ -3891,6 +4101,34 @@ public object FfiConverterSequenceTypeFetchable: FfiConverterRustBuffer<List<Fet
 
 
 
+/**
+ * @suppress
+ */
+public object FfiConverterSequenceTypeListItems: FfiConverterRustBuffer<List<ListItems>> {
+    override fun read(buf: ByteBuffer): List<ListItems> {
+        val len = buf.getInt()
+        return List<ListItems>(len) {
+            FfiConverterTypeListItems.read(buf)
+        }
+    }
+
+    override fun allocationSize(value: List<ListItems>): ULong {
+        val sizeForLength = 4UL
+        val sizeForItems = value.map { FfiConverterTypeListItems.allocationSize(it) }.sum()
+        return sizeForLength + sizeForItems
+    }
+
+    override fun write(value: List<ListItems>, buf: ByteBuffer) {
+        buf.putInt(value.size)
+        value.iterator().forEach {
+            FfiConverterTypeListItems.write(it, buf)
+        }
+    }
+}
+
+
+
+
 
 
 
@@ -3900,6 +4138,16 @@ public object FfiConverterSequenceTypeFetchable: FfiConverterRustBuffer<List<Fet
     UniffiLib.uniffi_starwars_fn_func_all_fetchable(
     
         _status)
+}
+    )
+    }
+    
+ fun `personRelatedItems`(`person`: Person): List<ListItems> {
+            return FfiConverterSequenceTypeListItems.lift(
+    uniffiRustCall() { _status ->
+    UniffiLib.uniffi_starwars_fn_func_person_related_items(
+    
+        FfiConverterTypePerson.lower(`person`),_status)
 }
     )
     }

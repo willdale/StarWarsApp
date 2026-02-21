@@ -52,15 +52,15 @@ struct SpeciesDetailView: View {
                 
                 // List Sections
                 if !species.people.isEmpty {
-                    SelectableRow(title: "People", icon: "person.2", items: .people(species.people.compactMap(URL.init)))
+                    SelectableRow(title: "People", icon: "person.2", items: .people(species.people))
                 }
                 
                 if !species.films.isEmpty {
-                    SelectableRow(title: "Films", icon: "film", items: .films(species.films.compactMap(URL.init)))
+                    SelectableRow(title: "Films", icon: "film", items: .films(species.films))
                 }
                 
-                if let homeworld = species.homeworld, let url = URL(string: homeworld) {
-                    SelectableRow(title: "Homeworld", icon: "house", items: .homeworld(url))
+                if let homeworld = species.homeworld {
+                    SelectableRow(title: "Homeworld", icon: "house", items: .homeworld(homeworld))
                 }
             }
             .padding(.vertical)

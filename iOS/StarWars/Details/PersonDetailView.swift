@@ -51,25 +51,25 @@ struct PersonDetailView: View {
                 
                 Divider()
                 
-                // List Sections
-                if !person.films.isEmpty {
-                    SelectableRow(title: "Films", icon: "film", items: .films(person.films.compactMap(URL.init)))
-                }
-                
-                if !person.species.isEmpty {
-                    SelectableRow(title: "Species", icon: "pawprint", items: .species(person.species.compactMap(URL.init)))
-                }
-                
-                if !person.starships.isEmpty {
-                    SelectableRow(title: "Starships", icon: "airplane", items: .starships(person.starships.compactMap(URL.init)))
-                }
-                
-                if !person.vehicles.isEmpty {
-                    SelectableRow(title: "Vehicles", icon: "car", items: .vehicles(person.vehicles.compactMap(URL.init)))
-                }
-                
-                if let homeworld = person.homeworld, let url = URL(string: homeworld) {
-                    SelectableRow(title: "Homeworld", icon: "house", items: .homeworld(url))
+                // List Sections (use Rust helper to centralize related items)
+                let related = personRelatedItems(person: person)
+                ForEach(related, id: \.self) { item in
+                    switch item {
+                    case .films:
+                        SelectableRow(title: "Films", icon: "film", items: item)
+                    case .species:
+                        SelectableRow(title: "Species", icon: "pawprint", items: item)
+                    case .starships:
+                        SelectableRow(title: "Starships", icon: "airplane", items: item)
+                    case .vehicles:
+                        SelectableRow(title: "Vehicles", icon: "car", items: item)
+                    case .planets:
+                        SelectableRow(title: "Planets", icon: "globe", items: item)
+                    case .people:
+                        SelectableRow(title: "People", icon: "person.2", items: item)
+                    case .homeworld(let urlStr):
+                        SelectableRow(title: "Homeworld", icon: "house", items: item)
+                    }
                 }
             }
             .padding(.vertical)

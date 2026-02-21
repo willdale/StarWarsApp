@@ -14,6 +14,7 @@ import uk.co.willdale.starwarsapp.Main.MainViewModel
 import uk.co.willdale.starwarsapp.Main.UiState
 import uniffi.starwars.Fetchable
 import uniffi.starwars.Person
+import uniffi.starwars.personRelatedItems
 import java.util.*
 
 @Composable
@@ -117,21 +118,32 @@ private fun PersonDetailContent(
 
         HorizontalDivider()
 
-        // List Sections
-        if (person.films.isNotEmpty()) {
-            SelectableRow(title = "Films") { onFilmClick(person.films) }
-        }
-        if (person.species.isNotEmpty()) {
-            SelectableRow(title = "Species") { onSpeciesClick(person.species) }
-        }
-        if (person.starships.isNotEmpty()) {
-            SelectableRow(title = "Starships") { onStarshipClick(person.starships) }
-        }
-        if (person.vehicles.isNotEmpty()) {
-            SelectableRow(title = "Vehicles") { onVehicleClick(person.vehicles) }
-        }
-        person.homeworld?.let { homeworld ->
-            SelectableRow(title = "Homeworld") { onHomeworldClick(homeworld) }
+        // List Sections (use Rust helper)
+        val related = personRelatedItems(person)
+        for (item in related) {
+            when (item) {
+                is uniffi.starwars.ListItems.Films -> {
+                    SelectableRow(title = "Films") { onFilmClick(item.v1) }
+                }
+                is uniffi.starwars.ListItems.Species -> {
+                    SelectableRow(title = "Species") { onSpeciesClick(item.v1) }
+                }
+                is uniffi.starwars.ListItems.Starships -> {
+                    SelectableRow(title = "Starships") { onStarshipClick(item.v1) }
+                }
+                is uniffi.starwars.ListItems.Vehicles -> {
+                    SelectableRow(title = "Vehicles") { onVehicleClick(item.v1) }
+                }
+                is uniffi.starwars.ListItems.Planets -> {
+                    SelectableRow(title = "Planets") { onFilmClick(item.v1) }
+                }
+                is uniffi.starwars.ListItems.People -> {
+                    SelectableRow(title = "People") { onFilmClick(item.v1) }
+                }
+                is uniffi.starwars.ListItems.Homeworld -> {
+                    SelectableRow(title = "Homeworld") { onHomeworldClick(item.v1) }
+                }
+            }
         }
     }
 }

@@ -41,13 +41,16 @@ struct InitialView: View {
             }
             .navigationDestination(for: ListItems.self) { selected in
                 switch selected {
-                case .planets(let urls): DataListView(urls: urls, fetcher: .planets)
-                case .people(let urls): DataListView(urls: urls, fetcher: .people)
-                case .films(let urls): DataListView(urls: urls, fetcher: .films)
-                case .species(let urls): DataListView(urls: urls, fetcher: .species)
-                case .starships(let urls): DataListView(urls: urls, fetcher: .starships)
-                case .vehicles(let urls): DataListView(urls: urls, fetcher: .vehicles)
-                case .homeworld(let url): HomeworldDetailView(url: url)
+                case .planets(let urls): DataListView(urls: urls.compactMap(URL.init), fetcher: .planets)
+                case .people(let urls): DataListView(urls: urls.compactMap(URL.init), fetcher: .people)
+                case .films(let urls): DataListView(urls: urls.compactMap(URL.init), fetcher: .films)
+                case .species(let urls): DataListView(urls: urls.compactMap(URL.init), fetcher: .species)
+                case .starships(let urls): DataListView(urls: urls.compactMap(URL.init), fetcher: .starships)
+                case .vehicles(let urls): DataListView(urls: urls.compactMap(URL.init), fetcher: .vehicles)
+                case .homeworld(let urlStr):
+                    if let url = URL(string: urlStr) {
+                        HomeworldDetailView(url: url)
+                    }
                 }
             }
         }

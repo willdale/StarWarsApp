@@ -39,12 +39,3 @@ struct SelectableRow: View {
     }
 }
 
-enum ListItems: Hashable {
-    case planets([URL])
-    case people([URL])
-    case films([URL])
-    case species([URL])
-    case starships([URL])
-    case vehicles([URL])
-    case homeworld(URL)
-}

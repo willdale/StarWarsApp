@@ -73,11 +73,11 @@ struct VehicleDetailView: View {
                 
                 // List Sections
                 if !vehicle.pilots.isEmpty {
-                    SelectableRow(title: "Pilots", icon: "person.bust", items: .people(vehicle.pilots.compactMap(URL.init)))
+                    SelectableRow(title: "Pilots", icon: "person.bust", items: .people(vehicle.pilots))
                 }
                 
                 if !vehicle.films.isEmpty {
-                    SelectableRow(title: "Films", icon: "film", items: .films(vehicle.films.compactMap(URL.init)))
+                    SelectableRow(title: "Films", icon: "film", items: .films(vehicle.films))
                 }
             }
             .padding(.vertical)

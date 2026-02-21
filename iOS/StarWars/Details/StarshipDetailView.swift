@@ -75,11 +75,11 @@ struct StarshipDetailView: View {
                 
                 // List Sections
                 if !starship.pilots.isEmpty {
-                    SelectableRow(title: "Pilots", icon: "person.bust", items: .people(starship.pilots.compactMap(URL.init)))
+                    SelectableRow(title: "Pilots", icon: "person.bust", items: .people(starship.pilots))
                 }
                 
                 if !starship.films.isEmpty {
-                    SelectableRow(title: "Films", icon: "film", items: .films(starship.films.compactMap(URL.init)))
+                    SelectableRow(title: "Films", icon: "film", items: .films(starship.films))
                 }
             }
             .padding(.vertical)

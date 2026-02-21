@@ -61,11 +61,11 @@ struct PlanetDetailView: View {
                 
                 // List Sections
                 if !planet.residents.isEmpty {
-                    SelectableRow(title: "Residents", icon: "person.2", items: .people(planet.residents.compactMap(URL.init)))
+                    SelectableRow(title: "Residents", icon: "person.2", items: .people(planet.residents))
                 }
                 
                 if !planet.films.isEmpty {
-                    SelectableRow(title: "Films", icon: "film", items: .films(planet.films.compactMap(URL.init)))
+                    SelectableRow(title: "Films", icon: "film", items: .films(planet.films))
                 }
             }
             .padding(.vertical)

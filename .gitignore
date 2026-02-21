@@ -41,6 +41,7 @@ Android/.idea/
 /.idea/workspace.xml
 /.idea/navEditor.xml
 /.idea/assetWizardSettings.xml
+Android/app/src/main/jniLibs/**/*.so
 .DS_Store
 /build
 /captures
