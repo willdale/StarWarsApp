@@ -1224,20 +1224,20 @@ public func FfiConverterTypeHttpClient_lower(_ value: HttpClient) -> UInt64 {
 
 
 public struct Film: Equatable, Hashable {
-    public var title: String
-    public var episodeId: Int32
-    public var openingCrawl: String
-    public var director: String
-    public var producer: String
-    public var releaseDate: String
-    public var characters: [String]
-    public var planets: [String]
-    public var starships: [String]
-    public var vehicles: [String]
-    public var species: [String]
-    public var created: String
-    public var edited: String
-    public var url: String
+    public let title: String
+    public let episodeId: Int32
+    public let openingCrawl: String
+    public let director: String
+    public let producer: String
+    public let releaseDate: String
+    public let characters: [String]
+    public let planets: [String]
+    public let starships: [String]
+    public let vehicles: [String]
+    public let species: [String]
+    public let created: String
+    public let edited: String
+    public let url: String
 
     // Default memberwise initializers are never public by default, so we
     // declare one manually.
@@ -1326,22 +1326,22 @@ public func FfiConverterTypeFilm_lower(_ value: Film) -> RustBuffer {
 
 
 public struct Person: Equatable, Hashable {
-    public var birthYear: String
-    public var eyeColor: String
-    public var films: [String]
-    public var gender: String
-    public var hairColor: String
-    public var height: String
-    public var homeworld: String?
-    public var mass: String
-    public var name: String
-    public var skinColor: String
-    public var created: String
-    public var edited: String
-    public var species: [String]
-    public var starships: [String]
-    public var url: String
-    public var vehicles: [String]
+    public let birthYear: String
+    public let eyeColor: String
+    public let films: [String]
+    public let gender: String
+    public let hairColor: String
+    public let height: String
+    public let homeworld: String?
+    public let mass: String
+    public let name: String
+    public let skinColor: String
+    public let created: String
+    public let edited: String
+    public let species: [String]
+    public let starships: [String]
+    public let url: String
+    public let vehicles: [String]
 
     // Default memberwise initializers are never public by default, so we
     // declare one manually.
@@ -1436,20 +1436,20 @@ public func FfiConverterTypePerson_lower(_ value: Person) -> RustBuffer {
 
 
 public struct Planet: Equatable, Hashable {
-    public var name: String
-    public var rotationPeriod: String
-    public var orbitalPeriod: String
-    public var diameter: String
-    public var climate: String
-    public var gravity: String
-    public var terrain: String
-    public var surfaceWater: String
-    public var population: String
-    public var residents: [String]
-    public var films: [String]
-    public var created: String
-    public var edited: String
-    public var url: String
+    public let name: String
+    public let rotationPeriod: String
+    public let orbitalPeriod: String
+    public let diameter: String
+    public let climate: String
+    public let gravity: String
+    public let terrain: String
+    public let surfaceWater: String
+    public let population: String
+    public let residents: [String]
+    public let films: [String]
+    public let created: String
+    public let edited: String
+    public let url: String
 
     // Default memberwise initializers are never public by default, so we
     // declare one manually.
@@ -1538,21 +1538,21 @@ public func FfiConverterTypePlanet_lower(_ value: Planet) -> RustBuffer {
 
 
 public struct Species: Equatable, Hashable {
-    public var name: String
-    public var classification: String
-    public var designation: String
-    public var averageHeight: String
-    public var skinColors: String
-    public var hairColors: String
-    public var eyeColors: String
-    public var averageLifespan: String
-    public var homeworld: String?
-    public var language: String
-    public var people: [String]
-    public var films: [String]
-    public var created: String
-    public var edited: String
-    public var url: String
+    public let name: String
+    public let classification: String
+    public let designation: String
+    public let averageHeight: String
+    public let skinColors: String
+    public let hairColors: String
+    public let eyeColors: String
+    public let averageLifespan: String
+    public let homeworld: String?
+    public let language: String
+    public let people: [String]
+    public let films: [String]
+    public let created: String
+    public let edited: String
+    public let url: String
 
     // Default memberwise initializers are never public by default, so we
     // declare one manually.
@@ -1644,24 +1644,24 @@ public func FfiConverterTypeSpecies_lower(_ value: Species) -> RustBuffer {
 
 
 public struct Starship: Equatable, Hashable {
-    public var name: String
-    public var model: String
-    public var manufacturer: String
-    public var costInCredits: String
-    public var length: String
-    public var maxAtmospheringSpeed: String
-    public var crew: String
-    public var passengers: String
-    public var cargoCapacity: String
-    public var consumables: String
-    public var hyperdriveRating: String
-    public var mglt: String
-    public var starshipClass: String
-    public var pilots: [String]
-    public var films: [String]
-    public var created: String
-    public var edited: String
-    public var url: String
+    public let name: String
+    public let model: String
+    public let manufacturer: String
+    public let costInCredits: String
+    public let length: String
+    public let maxAtmospheringSpeed: String
+    public let crew: String
+    public let passengers: String
+    public let cargoCapacity: String
+    public let consumables: String
+    public let hyperdriveRating: String
+    public let mglt: String
+    public let starshipClass: String
+    public let pilots: [String]
+    public let films: [String]
+    public let created: String
+    public let edited: String
+    public let url: String
 
     // Default memberwise initializers are never public by default, so we
     // declare one manually.
@@ -1762,22 +1762,22 @@ public func FfiConverterTypeStarship_lower(_ value: Starship) -> RustBuffer {
 
 
 public struct Vehicle: Equatable, Hashable {
-    public var name: String
-    public var model: String
-    public var manufacturer: String
-    public var costInCredits: String
-    public var length: String
-    public var maxAtmospheringSpeed: String
-    public var crew: String
-    public var passengers: String
-    public var cargoCapacity: String
-    public var consumables: String
-    public var vehicleClass: String
-    public var pilots: [String]
-    public var films: [String]
-    public var created: String
-    public var edited: String
-    public var url: String
+    public let name: String
+    public let model: String
+    public let manufacturer: String
+    public let costInCredits: String
+    public let length: String
+    public let maxAtmospheringSpeed: String
+    public let crew: String
+    public let passengers: String
+    public let cargoCapacity: String
+    public let consumables: String
+    public let vehicleClass: String
+    public let pilots: [String]
+    public let films: [String]
+    public let created: String
+    public let edited: String
+    public let url: String
 
     // Default memberwise initializers are never public by default, so we
     // declare one manually.
