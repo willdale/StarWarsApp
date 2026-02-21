@@ -1,10 +1,11 @@
-package uk.co.willdale.starwarsapp
+package uk.co.willdale.starwarsapp.networking
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import uniffi.starwars.HttpClient
 import uniffi.starwars.NetworkException
 import java.net.HttpURLConnection
+import java.net.SocketTimeoutException
 import java.net.URL
 
 class HttpClientAndroid : HttpClient {
@@ -23,7 +24,7 @@ class HttpClientAndroid : HttpClient {
             }
         } catch (e: NetworkException) {
             throw e  // let UniFFI-mapped exceptions pass through untouched
-        } catch (e: java.net.SocketTimeoutException) {
+        } catch (e: SocketTimeoutException) {
             throw NetworkException.Timeout()
         } catch (e: Exception) {
             throw NetworkException.RequestFailed(reason = e.message ?: "Unknown error")
