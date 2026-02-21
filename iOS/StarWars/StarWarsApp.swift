@@ -18,6 +18,3 @@ struct StarwarsApp: App {
         }
     }
 }
-
-import StarWarsLibrary
-

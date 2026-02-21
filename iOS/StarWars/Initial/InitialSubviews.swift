@@ -9,269 +9,142 @@ import SwiftUI
 import StarWarsLibrary
 
 extension InitialView {
-    struct PlanetsView: View {
+    struct DataListView<T: URLIdentifiable>: View, Equatable {
         @Environment(Repository.self) private var repo
-        @State private var viewState: ViewState<Planet> = .loading
+        @State private var viewState: ViewState<T> = .loading
+        
         let urls: [URL]?
+        let fetcher: ResourceFetcher<T>
         
         var body: some View {
             List {
-                if case .loaded(let planets) = viewState {
-                    ForEach(planets, id: \.url) { planet in
-                        NavigationLink(planet.name, value: Selected.planet(planet))
+                if case .loaded(let items) = viewState {
+                    ForEach(items, id: \.url) { item in
+                        NavigationLink(fetcher.label(item), value: fetcher.selection(item))
                     }
                 }
             }
-            .navigationTitle("Planets")
+            .navigationTitle(fetcher.title)
             .overlay { StateOverlay(viewState: viewState) }
             .task {
                 do {
                     if let urls {
-                        let planets = try await withThrowingTaskGroup(of: Planet.self) { group in
+                        let items = try await withThrowingTaskGroup(of: T.self) { group in
                             for url in urls {
-                                group.addTask {
-                                    try await repo.apiClient.fetchPlanet(url: url.absoluteString)
-                                }
+                                group.addTask { try await fetcher.fetchOne(repo, url.absoluteString) }
                             }
-                            
-                            var results: [Planet] = []
-                            for try await planet in group {
-                                results.append(planet)
-                            }
+                            var results: [T] = []
+                            for try await item in group { results.append(item) }
                             return results
                         }
-                        self.viewState = .loaded(planets)
+                        viewState = .loaded(items)
                     } else {
-                        let ignoreCache = !repo.fetched.contains(.planets)
-                        let planets = try await repo.apiClient.fetchPlanets(ignoreCache: ignoreCache)
-                        self.viewState = .loaded(planets)
-                        repo.fetched.insert(.planets)
+                        let ignoreCache = !repo.fetched.contains(fetcher.cacheKey)
+                        let items = try await fetcher.fetchAll(repo, ignoreCache)
+                        viewState = .loaded(items)
+                        repo.fetched.insert(fetcher.cacheKey)
                     }
                 } catch {
-                    self.viewState = .error
+                    viewState = .error
                 }
             }
+        }
+        
+        static func == (lhs: InitialView.DataListView<T>, rhs: InitialView.DataListView<T>) -> Bool {
+            lhs.fetcher == rhs.fetcher
+            && lhs.urls == rhs.urls
         }
     }
-    
-    struct PeopleView: View {
-        @Environment(Repository.self) private var repo
-        @State private var viewState: ViewState<Person> = .loading
-        let urls: [URL]?
+}
+
+typealias ResourceFetcher = InitialView.ResourceFetcher
+
+extension InitialView {
+    struct ResourceFetcher<T: Sendable>: Hashable {
+        let title: LocalizedStringResource
+        let cacheKey: Fetchable
+        let label: (T) -> String
+        let selection: (T) -> Selected
+        let fetchOne: (Repository, String) async throws -> T
+        let fetchAll: (Repository, Bool) async throws -> [T]
         
-        var body: some View {
-            List {
-                if case .loaded(let people) = viewState {
-                    ForEach(people, id: \.url) { person in
-                        NavigationLink(person.name, value: Selected.person(person))
-                    }
-                }
-            }
-            .navigationTitle("People")
-            .overlay { StateOverlay(viewState: viewState) }
-            .task {
-                do {
-                    if let urls {
-                        let people = try await withThrowingTaskGroup(of: Person.self) { group in
-                            for url in urls {
-                                group.addTask {
-                                    try await repo.apiClient.fetchPerson(url: url.absoluteString)
-                                }
-                            }
-                            var results: [Person] = []
-                            for try await person in group {
-                                results.append(person)
-                            }
-                            return results
-                        }
-                        self.viewState = .loaded(people)
-                    } else {
-                        let ignoreCache = !repo.fetched.contains(.people)
-                        let people = try await repo.apiClient.fetchPeople(ignoreCache: ignoreCache)
-                        self.viewState = .loaded(people)
-                        repo.fetched.insert(.people)
-                    }
-                } catch {
-                    self.viewState = .error
-                }
-            }
+        static func == (lhs: InitialView.ResourceFetcher<T>, rhs: InitialView.ResourceFetcher<T>) -> Bool {
+            lhs.title == lhs.title
+            && lhs.cacheKey == lhs.cacheKey
+        }
+        
+        func hash(into hasher: inout Hasher) {
+            hasher.combine(title.key)
+            hasher.combine(cacheKey)
         }
     }
-    
-    struct FilmsView: View {
-        @Environment(Repository.self) private var repo
-        @State private var viewState: ViewState<Film> = .loading
-        let urls: [URL]?
-        
-        var body: some View {
-            List {
-                if case .loaded(let films) = viewState {
-                    ForEach(films, id: \.url) { film in
-                        NavigationLink(film.title, value: Selected.film(film))
-                    }
-                }
-            }
-            .navigationTitle("Films")
-            .overlay { StateOverlay(viewState: viewState) }
-            .task {
-                do {
-                    if let urls {
-                        let films = try await withThrowingTaskGroup(of: Film.self) { group in
-                            for url in urls {
-                                group.addTask {
-                                    try await repo.apiClient.fetchFilm(url: url.absoluteString)
-                                }
-                            }
-                            var results: [Film] = []
-                            for try await film in group {
-                                results.append(film)
-                            }
-                            return results
-                        }
-                        self.viewState = .loaded(films)
-                    } else {
-                        let ignoreCache = !repo.fetched.contains(.films)
-                        let films = try await repo.apiClient.fetchFilms(ignoreCache: ignoreCache)
-                        self.viewState = .loaded(films)
-                        repo.fetched.insert(.films)
-                    }
-                } catch {
-                    self.viewState = .error
-                }
-            }
-        }
+}
+
+extension InitialView.ResourceFetcher {
+    static var planets: ResourceFetcher<Planet> {
+        ResourceFetcher<Planet>(
+            title: "Planets",
+            cacheKey: .planets,
+            label: \.name,
+            selection: { .planet($0) },
+            fetchOne: { try await $0.apiClient.fetchPlanet(url: $1) },
+            fetchAll: { try await $0.apiClient.fetchPlanets(ignoreCache: $1) }
+        )
     }
-    
-    struct SpeciesView: View {
-        @Environment(Repository.self) private var repo
-        @State private var viewState: ViewState<Species> = .loading
-        let urls: [URL]?
-        
-        var body: some View {
-            List {
-                if case .loaded(let species) = viewState {
-                    ForEach(species, id: \.url) { specie in
-                        NavigationLink(specie.name, value: Selected.species(specie))
-                    }
-                }
-            }
-            .navigationTitle("Species")
-            .overlay { StateOverlay(viewState: viewState) }
-            .task {
-                do {
-                    if let urls {
-                        let species = try await withThrowingTaskGroup(of: Species.self) { group in
-                            for url in urls {
-                                group.addTask {
-                                    try await repo.apiClient.fetchSpecies(url: url.absoluteString)
-                                }
-                            }
-                            var results: [Species] = []
-                            for try await specie in group {
-                                results.append(specie)
-                            }
-                            return results
-                        }
-                        self.viewState = .loaded(species)
-                    } else {
-                        let ignoreCache = !repo.fetched.contains(.species)
-                        let species = try await repo.apiClient.fetchSpeciesList(ignoreCache: ignoreCache)
-                        self.viewState = .loaded(species)
-                        repo.fetched.insert(.species)
-                    }
-                } catch {
-                    self.viewState = .error
-                }
-            }
-        }
+
+    static var people: ResourceFetcher<Person> {
+        ResourceFetcher<Person>(
+            title: "People",
+            cacheKey: .people,
+            label: \.name,
+            selection: { .person($0) },
+            fetchOne: { try await $0.apiClient.fetchPerson(url: $1) },
+            fetchAll: { try await $0.apiClient.fetchPeople(ignoreCache: $1) }
+        )
     }
-    
-    struct StarshipsView: View {
-        @Environment(Repository.self) private var repo
-        @State private var viewState: ViewState<Starship> = .loading
-        let urls: [URL]?
-        
-        var body: some View {
-            List {
-                if case .loaded(let starships) = viewState {
-                    ForEach(starships, id: \.url) { starship in
-                        NavigationLink(starship.name, value: Selected.starship(starship))
-                    }
-                }
-            }
-            .navigationTitle("Starships")
-            .overlay { StateOverlay(viewState: viewState) }
-            .task {
-                do {
-                    if let urls {
-                        let starships = try await withThrowingTaskGroup(of: Starship.self) { group in
-                            for url in urls {
-                                group.addTask {
-                                    try await repo.apiClient.fetchStarship(url: url.absoluteString)
-                                }
-                            }
-                            var results: [Starship] = []
-                            for try await starship in group {
-                                results.append(starship)
-                            }
-                            return results
-                        }
-                        self.viewState = .loaded(starships)
-                    } else {
-                        let ignoreCache = !repo.fetched.contains(.starships)
-                        let starships = try await repo.apiClient.fetchStarships(ignoreCache: ignoreCache)
-                        self.viewState = .loaded(starships)
-                        repo.fetched.insert(.starships)
-                    }
-                } catch {
-                    self.viewState = .error
-                }
-            }
-        }
+
+    static var films: ResourceFetcher<Film> {
+        ResourceFetcher<Film>(
+            title: "Films",
+            cacheKey: .films,
+            label: \.title,
+            selection: { .film($0) },
+            fetchOne: { try await $0.apiClient.fetchFilm(url: $1) },
+            fetchAll: { try await $0.apiClient.fetchFilms(ignoreCache: $1) }
+        )
     }
-    
-    struct VehiclesView: View {
-        @Environment(Repository.self) private var repo
-        @State private var viewState: ViewState<Vehicle> = .loading
-        let urls: [URL]?
-        
-        var body: some View {
-            List {
-                if case .loaded(let vehicles) = viewState {
-                    ForEach(vehicles, id: \.url) { vehicle in
-                        NavigationLink(vehicle.name, value: Selected.vehicle(vehicle))
-                    }
-                }
-            }
-            .navigationTitle("Vehicles")
-            .overlay { StateOverlay(viewState: viewState) }
-            .task {
-                do {
-                    if let urls {
-                        let vehicles = try await withThrowingTaskGroup(of: Vehicle.self) { group in
-                            for url in urls {
-                                group.addTask {
-                                    try await repo.apiClient.fetchVehicle(url: url.absoluteString)
-                                }
-                            }
-                            var results: [Vehicle] = []
-                            for try await vehicle in group {
-                                results.append(vehicle)
-                            }
-                            return results
-                        }
-                        self.viewState = .loaded(vehicles)
-                    } else {
-                        let ignoreCache = !repo.fetched.contains(.vehicles)
-                        let vehicles = try await repo.apiClient.fetchVehicles(ignoreCache: ignoreCache)
-                        self.viewState = .loaded(vehicles)
-                        repo.fetched.insert(.vehicles)
-                    }
-                } catch {
-                    self.viewState = .error
-                }
-            }
-        }
+
+    static var species: ResourceFetcher<Species> {
+        ResourceFetcher<Species>(
+            title: "Species",
+            cacheKey: .species,
+            label: \.name,
+            selection: { .species($0) },
+            fetchOne: { try await $0.apiClient.fetchSpecies(url: $1) },
+            fetchAll: { try await $0.apiClient.fetchSpeciesList(ignoreCache: $1) }
+        )
+    }
+
+    static var starships: ResourceFetcher<Starship> {
+        ResourceFetcher<Starship>(
+            title: "Starships",
+            cacheKey: .starships,
+            label: \.name,
+            selection: { .starship($0) },
+            fetchOne: { try await $0.apiClient.fetchStarship(url: $1) },
+            fetchAll: { try await $0.apiClient.fetchStarships(ignoreCache: $1) }
+        )
+    }
+
+    static var vehicles: ResourceFetcher<Vehicle> {
+        ResourceFetcher<Vehicle>(
+            title: "Vehicles",
+            cacheKey: .vehicles,
+            label: \.name,
+            selection: { .vehicle($0) },
+            fetchOne: { try await $0.apiClient.fetchVehicle(url: $1) },
+            fetchAll: { try await $0.apiClient.fetchVehicles(ignoreCache: $1) }
+        )
     }
 }
 
