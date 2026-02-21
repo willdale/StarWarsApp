@@ -30,6 +30,25 @@ iOS/StarWarsLibrary/Frameworks
 .swiftpm/
 Package.resolved
 
+# Android
+*.iml
+.gradle
+/local.properties
+Android/.idea/
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+
+
 # macOS noise
 .DS_Store
 *.swp
